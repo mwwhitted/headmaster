@@ -1,0 +1,451 @@
+ --
+-- Table structure for table `Addresses`
+--
+
+CREATE TABLE `Addresses ` (
+  `address_id` int(10) UNSIGNED NOT NULL,
+  `street_line_1` varchar(50) NOT NULL,
+  `line_2` varchar(50) DEFAULT NULL,
+  `city` varchar(35) NOT NULL,
+  `state_prov_reg` enum('TX','OK','AR','LA','NM','SD','AR','') DEFAULT 'TX',
+  `postal_code` varchar(15) DEFAULT NULL,
+  `country` enum('US','CA','MX','CN','JP','KO','UK','') DEFAULT 'US',
+  `display_address` tinytext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `AttendanceRecords`
+--
+
+CREATE TABLE `AttendanceRecords` (
+  `attendance_record_id` int(10) UNSIGNED NOT NULL,
+  `school_year_id` int(10) UNSIGNED NOT NULL,
+  `student_num` int(10) UNSIGNED NOT NULL,
+  `grading_period` enum('1','2','3','4') NOT NULL,
+  `excused_absence` decimal(4,1) NOT NULL,
+  `unexcused_absence` decimal(4,1) NOT NULL,
+  `tardy` decimal(4,1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `ClassHeaders`
+--
+
+CREATE TABLE `ClassHeaders` (
+  `class_id` int(10) UNSIGNED NOT NULL,
+  `subject_id` int(10) UNSIGNED NOT NULL,
+  `day` enum('A','B') NOT NULL,
+  `time` time NOT NULL,
+  `school_year_id` int(10) UNSIGNED NOT NULL,
+  `term` enum('Full','Fall','Spring') NOT NULL DEFAULT 'Full',
+  `room` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `ClassesStudents`
+--
+
+CREATE TABLE `ClassesStudents` (
+  `class_student_id` int(10) UNSIGNED NOT NULL,
+  `class_id` int(10) UNSIGNED NOT NULL,
+  `student_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `ClassesTeachers`
+--
+
+CREATE TABLE `ClassesTeachers` (
+  `class_teacher_id` int(10) UNSIGNED NOT NULL,
+  `class_id` int(10) UNSIGNED NOT NULL,
+  `teacher_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `EmailAddresses`
+--
+
+CREATE TABLE `EmailAddresses` (
+  `email_address_id` int(10) UNSIGNED NOT NULL,
+  `email_address` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `Grades`
+--
+
+CREATE TABLE `Grades` (
+  `grade_id` int(10) UNSIGNED NOT NULL,
+  `school_year_id` int(10) UNSIGNED NOT NULL,
+  `grading_period` enum('1','2','3','4') NOT NULL,
+  `class_id` int(10) UNSIGNED NOT NULL,
+  `student_id` int(10) UNSIGNED NOT NULL,
+  `academic_grade` varchar(3) NOT NULL,
+  `citz_grade` enum('E','S','U') NOT NULL,
+  `transcript_relevant` tinyint(1) NOT NULL DEFAULT '1',
+  `comment` tinytext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `Persons`
+--
+
+CREATE TABLE `Persons` (
+  `person_id` int(10) UNSIGNED NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `middle_name` varchar(50) DEFAULT NULL,
+  `prefix` enum('Mr.','Mrs.','Ms.','Sir','Dr.','Rev.','Master','Miss') DEFAULT NULL,
+  `suffix` enum('Phd','Jr','Sr','III','MD') DEFAULT NULL,
+  `gender` enum('M','F') NOT NULL,
+  `display_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `PersonsAddresses`
+--
+
+CREATE TABLE `PersonsAddresses` (
+  `person_adress_id` int(10) UNSIGNED NOT NULL,
+  `person_id` int(10) UNSIGNED NOT NULL,
+  `adress_id` int(10) UNSIGNED NOT NULL,
+  `address_type` enum('Home','Office','Billing','Other') NOT NULL DEFAULT 'Home'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `PersonsEmailAddresses`
+--
+
+CREATE TABLE `PersonsEmailAddresses` (
+  `personEmail_address_id` int(10) UNSIGNED NOT NULL,
+  `person_id` int(10) UNSIGNED NOT NULL,
+  `email_address_id` int(10) UNSIGNED NOT NULL,
+  `email_type` enum('Teacher','Student','Father','Mother','Other') NOT NULL DEFAULT 'Other'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `ReportCardHeaders`
+--
+
+CREATE TABLE `ReportCardHeaders` (
+  `report_card_id` int(10) UNSIGNED NOT NULL,
+  `student_id` int(10) UNSIGNED NOT NULL,
+  `school_year_id` int(10) UNSIGNED NOT NULL,
+  `grading_period` enum('1','2','3','4') NOT NULL,
+  `Comment` tinytext NOT NULL,
+  `report_card_pdf` varchar(100) NOT NULL COMMENT 'File Name'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `ReportCardSubjectsLines`
+--
+
+CREATE TABLE `ReportCardSubjectLines` (
+  `ReportCardHeaders_id` int(10) UNSIGNED NOT NULL,
+  `report_card_line_id` int(10) UNSIGNED NOT NULL,
+  `school_year_id` int(10) UNSIGNED NOT NULL,
+  `day` enum('A','B') NOT NULL,
+  `subject_id` int(10) UNSIGNED NOT NULL,
+  `teacher_name` varchar(50) NOT NULL,
+  `Q1_grade_id` varchar(3) NOT NULL,
+  `Q2_grade_id` varchar(3) NOT NULL,
+  `academic_grade_fall` varchar(3) NOT NULL,
+  `Q3_grade_id` varchar(3) NOT NULL,
+  `Q4_grade_id` varchar(3) NOT NULL,
+  `academic_grade_spring` varchar(3) NOT NULL,
+  `comment` tinytext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `SchoolYears`
+--
+
+CREATE TABLE `SchoolYears` (
+  `school_year_id` int(10) UNSIGNED NOT NULL,
+  `school_year` varchar(10) NOT NULL,
+  `first_day` date NOT NULL,
+  `Q1_start` date NOT NULL,
+  `Q1_progress_report` date NOT NULL,
+  `Q1_end` date NOT NULL,
+  `Q1_days` tinyint(2) NOT NULL,
+  `Q2_start` date NOT NULL,
+  `Q1_report_cards` date NOT NULL,
+  `Q2_progress_report` date NOT NULL,
+  `Q2_end` date NOT NULL,
+  `Q2_days` tinyint(2) NOT NULL,
+  `Q3_start` date NOT NULL,
+  `Q2_report_cards` date NOT NULL,
+  `Q3_progress_report` date NOT NULL,
+  `Q3_end` date NOT NULL,
+  `Q3_days` tinyint(2) NOT NULL,
+  `Q4_start` date NOT NULL,
+  `Q3_report_cards` date NOT NULL,
+  `Q4_progress_report` date NOT NULL,
+  `Q4_end` date NOT NULL,
+  `Q4_days` tinyint(2) NOT NULL,
+  `last_day` date NOT NULL,
+  `total_days` tinyint(3) NOT NULL,
+  `Q4_report_cards` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `Students`
+--
+
+CREATE TABLE `Students` (
+  `student_id` int(10) UNSIGNED NOT NULL,
+  `person_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `dob` date NOT NULL,
+  `grade` enum('1','2','3','4','5','6','7','8','9','10','11','12','K') NOT NULL,
+  `fed_student_id` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `Subjects`
+--
+
+CREATE TABLE `Subjects` (
+  `subject_id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `description` tinytext NOT NULL,
+  `grade_type` enum('100','PF') NOT NULL DEFAULT '100'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `Teachers`
+--
+
+CREATE TABLE `Teachers` (
+  `teacher_id` int(10) UNSIGNED NOT NULL,
+  `person_id` int(10) UNSIGNED NOT NULL,
+  `start_date` date NOT NULL,
+  `report_card_name` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `Telephones`
+--
+
+CREATE TABLE `Telephones` (
+  `telephone_id` int(10) UNSIGNED NOT NULL,
+  `country_code` enum('1','86','81','82','44','52') NOT NULL DEFAULT '1',
+  `telephone_number` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `Addresses`
+--
+ALTER TABLE `Addresses`
+  ADD PRIMARY KEY (`address_id`);
+
+--
+-- Indexes for table `AttendanceRecords`
+--
+ALTER TABLE `AttendanceRecords`
+  ADD PRIMARY KEY (`attendance_record_id`),
+  ADD KEY `school_year_num` (`school_year_id`),
+  ADD KEY `student_num` (`student_num`);
+
+--
+-- Indexes for table `ClassHeaders`
+--
+ALTER TABLE `ClassHeaders`
+  ADD PRIMARY KEY (`class_id`),
+  ADD KEY `subject_num` (`subject_id`),
+  ADD KEY `school_year_num` (`school_year_id`);
+
+--
+-- Indexes for table `ClassesStudents`
+--
+ALTER TABLE `ClassesStudents`
+  ADD PRIMARY KEY (`class_student_id`) USING BTREE,
+  ADD KEY `class_num` (`class_id`) USING BTREE,
+  ADD KEY `student_num` (`student_id`) USING BTREE;
+
+--
+-- Indexes for table `ClassesTeachers`
+--
+ALTER TABLE `ClassesTeachers`
+  ADD PRIMARY KEY (`class_teacher_id`),
+  ADD KEY `teacher_num` (`teacher_id`),
+  ADD KEY `class_num` (`class_id`) USING BTREE;
+
+--
+-- Indexes for table `EmailAddresses`
+--
+ALTER TABLE `EmailAddresses`
+  ADD PRIMARY KEY (`email_address_id`);
+
+--
+-- Indexes for table `Grades`
+--
+ALTER TABLE `Grades`
+  ADD PRIMARY KEY (`grade_id`),
+  ADD UNIQUE KEY `grade` (`school_year_id`,`grading_period`,`class_id`,`student_id`) USING BTREE,
+  ADD KEY `school_year_num` (`school_year_id`),
+  ADD KEY `class_num` (`class_id`),
+  ADD KEY `student_num` (`student_id`);
+
+--
+-- Indexes for table `Persons`
+--
+ALTER TABLE `Persons`
+  ADD PRIMARY KEY (`person_id`);
+
+--
+-- Indexes for table `PersonsAddresses`
+--
+ALTER TABLE `PersonsAddresses`
+  ADD PRIMARY KEY (`person_adress_id`),
+  ADD KEY `person_num` (`person_id`),
+  ADD KEY `adress_num` (`adress_id`);
+
+--
+-- Indexes for table `PersonsEmailAddresses`
+--
+ALTER TABLE `PersonsEmailAddresses`
+  ADD PRIMARY KEY (`personEmail_address_id`) USING BTREE;
+
+--
+-- Indexes for table `PersonsTelephones`
+--
+ALTER TABLE `PersonsTelephones`
+  ADD PRIMARY KEY (`person_telephone_number_id`),
+  ADD KEY `person_num` (`person_id`),
+  ADD KEY `telephone_number_num` (`telephone_number_id`);
+
+--
+-- Indexes for table `ReportCardHeaders`
+--
+ALTER TABLE `ReportCardHeaders`
+  ADD PRIMARY KEY (`report_card_id`),
+  ADD KEY `student_num` (`student_id`),
+  ADD KEY `school_year_num` (`school_year_id`);
+
+--
+-- Indexes for table `ReportCardSubjectLines`
+--
+ALTER TABLE `ReportCardSubjectLines`
+  ADD PRIMARY KEY (`report_card_header_id`,`report_card_line_id`,`school_year_id`,`day`,`subject_id`) USING BTREE,
+  ADD KEY `school_year_num` (`school_year_id`),
+  ADD KEY `subject_num` (`subject_id`),
+  ADD KEY `report_card_line_id` (`report_card_line_id`) USING BTREE;
+
+--
+-- Indexes for table `SchoolYears`
+--
+ALTER TABLE `SchoolYears`
+  ADD PRIMARY KEY (`school_year_id`);
+
+--
+-- Indexes for table `Students`
+--
+ALTER TABLE `Students`
+  ADD PRIMARY KEY (`student_id`),
+  ADD KEY `person_num` (`person_id`);
+
+--
+-- Indexes for table `Subjects`
+--
+ALTER TABLE `Subjects`
+  ADD PRIMARY KEY (`subject_id`);
+
+--
+-- Indexes for table `Teachers`
+--
+ALTER TABLE `Teachers`
+  ADD PRIMARY KEY (`teacher_id`),
+  ADD KEY `person_num` (`person_id`);
+
+--
+-- Indexes for table `Telephones`
+--
+ALTER TABLE `Telephones`
+  ADD PRIMARY KEY (`telephone_id`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `AttendanceRecords`
+--
+ALTER TABLE `AttendanceRecords`
+  ADD CONSTRAINT `AttendanceRecords_ibfk_1` FOREIGN KEY (`school_year_id`) REFERENCES `SchoolYears` (`school_year_id`),
+  ADD CONSTRAINT `AttendanceRecords_ibfk_2` FOREIGN KEY (`student_num`) REFERENCES `Students` (`student_id`);
+
+--
+-- Constraints for table `ClassHeaders`
+--
+ALTER TABLE `ClassHeaders`
+  ADD CONSTRAINT `ClassHeaders_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `Subjects` (`subject_id`),
+  ADD CONSTRAINT `ClassHeaders_ibfk_2` FOREIGN KEY (`school_year_id`) REFERENCES `SchoolYears` (`school_year_id`);
+
+--
+-- Constraints for table `ClassesStudents`
+--
+ALTER TABLE `ClassesStudents`
+  ADD CONSTRAINT `ClassesStudents_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `ClassHeaders` (`class_id`),
+  ADD CONSTRAINT `ClassesStudents_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `Students` (`student_id`);
+
+--
+-- Constraints for table `ClassesTeachers`
+--
+ALTER TABLE `ClassesTeachers`
+  ADD CONSTRAINT `ClassesTeachers_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `ClassHeaders` (`class_id`),
+  ADD CONSTRAINT `ClassesTeachers_ibfk_2` FOREIGN KEY (`teacher_id`) REFERENCES `Teachers` (`teacher_id`);
+
+--
+-- Constraints for table `Grades`
+--
+ALTER TABLE `Grades`
+  ADD CONSTRAINT `Grades_ibfk_1` FOREIGN KEY (`school_year_id`) REFERENCES `SchoolYears` (`school_year_id`),
+  ADD CONSTRAINT `Grades_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `ClassHeaders` (`class_id`),
+  ADD CONSTRAINT `Grades_ibfk_3` FOREIGN KEY (`student_id`) REFERENCES `Students` (`student_id`);
+
+--
+-- Constraints for table `PersonsAddresses`
+--
+ALTER TABLE `PersonsAddresses`
+  ADD CONSTRAINT `personAddresses_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `person` (`person_id`),
+  ADD CONSTRAINT `personAddresses_ibfk_2` FOREIGN KEY (`adress_id`) REFERENCES `Addresses` (`address_id`);
+
+--
+-- Constraints for table `PersonsTelephones`
+--
+ALTER TABLE `PersonsTelephones`
+  ADD CONSTRAINT `PersonsTelephones_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `Persons` (`person_id`),
+  ADD CONSTRAINT `PersonsTelephones_ibfk_2` FOREIGN KEY (`telephone_number_id`) REFERENCES `Telephones` (`telephone_id`);
+
+--
+-- Constraints for table `ReportCardHeaders`
+--
+ALTER TABLE `ReportCardHeaders`
+  ADD CONSTRAINT `ReportCardHeaders_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `Students` (`student_id`),
+  ADD CONSTRAINT `ReportCardHeaders_ibfk_2` FOREIGN KEY (`school_year_id`) REFERENCES `SchoolYears` (`school_year_id`);
+
+--
+-- Constraints for table `ReportCardSubjectLines`
+--
+ALTER TABLE `ReportCardSubjectLines`
+  ADD CONSTRAINT `ReportCardSubjectLines_ibfk_1` FOREIGN KEY (`report_card_header_id`) REFERENCES `ReportCardHeaders` (`report_card_id`),
+  ADD CONSTRAINT `ReportCardSubjectLines_ibfk_3` FOREIGN KEY (`school_year_id`) REFERENCES `SchoolYears` (`school_year_id`),
+  ADD CONSTRAINT `ReportCardSubjectLines_ibfk_4` FOREIGN KEY (`subject_id`) REFERENCES `Subjects` (`subject_id`);
+
+--
+-- Constraints for table `Students`
+--
+ALTER TABLE `Students`
+  ADD CONSTRAINT `student_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `Persons` (`person_id`);
+
+--
+-- Constraints for table `Teachers`
+--
+ALTER TABLE `Teachers`
+  ADD CONSTRAINT `Teachers_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `Persons` (`person_id`);
+SET FOREIGN_KEY_CHECKS=1;
+
