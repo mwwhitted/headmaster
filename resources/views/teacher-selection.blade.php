@@ -1,5 +1,9 @@
 @extends('layouts.layout')
 
+@section('title')
+  Teacher Selection
+@stop
+
 @section('content')
 
 <div id=teacher_head>

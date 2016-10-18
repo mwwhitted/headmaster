@@ -1,5 +1,9 @@
 @extends('layouts.layout')
 
+@section('title')
+  Grade Entry
+@stop
+
 @section('content')
 
 <div id=student_head>

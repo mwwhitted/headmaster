@@ -8,10 +8,15 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>Headmaster</title>
+  <title>@yield('title')</title>
 
   <!-- Styles -->
-  <link href="/css/app.css" rel="stylesheet">
+  <!-- <link href="/css/app.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+  crossorigin="anonymous">
+
 
   <!-- Scripts -->
   <script>
@@ -23,6 +28,12 @@
 <body>
   <div id="app">
     <div class="container">
+      <br/>
+      @if(Session::has('flash_message'))
+      <div class="alert alert-success">
+        {{ Session::get('flash_message') }}
+      </div>
+      @endif
       <div class="header">
         @include('header')
       </div>  <!-- end       <div class="header"> -->

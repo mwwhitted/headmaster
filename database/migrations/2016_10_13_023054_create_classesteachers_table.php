@@ -14,14 +14,16 @@ class CreateClassesteachersTable extends Migration
     public function up()
     {
         Schema::create('ClassesTeachers', function (Blueprint $table) {
-            $table->increments('class_teacher_id');
-            $table->unsignedInteger('class_id');
-            $table->unsignedInteger('teacher_id');
+            $table->increments('id');
+            $table->unsignedInteger('class_id')->references('id')->on('classheaders');
+            $table->unsignedInteger('teacher_id')->references('id')->on('teachers');
             $table->timestamps();
+
             $table->index('class_id');
             $table->index('teacher_id');
-            $table->foreign('class_id')->references('id')->on('classheaders');
-            $table->foreign('teacher_id')->references('id')->on('teachers');
+
+            // $table->foreign('class_id')->references('id')->on('classheaders');
+            // $table->foreign('teacher_id')->references('id')->on('teachers');
         });
     }
 

@@ -6,14 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
 {
-
   /**
-     * Get the person record associated with the teacher.
+     * Fillable fields
+     *
+     * @var array
      */
-    public function person()
-    {
-        return $this->hasOne('App\Person');
-    }
+    protected $fillable = [
+        'person_id',
+        'start_date',
+        'report_card_name'
+    ];
+  
+  //  Get the person record associated with the teacher.
+  public function person()
+  {
+    return $this->hasOne('App\Person');
+  }
+}
 
   // public function classes_teacher() {
   //
@@ -27,4 +36,3 @@ class Teacher extends Model
   //   return $this->ClassesTeachers()->save($classes_teacher);
   //
   // }
-}

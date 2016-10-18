@@ -14,7 +14,7 @@ class CreateClassheadersTable extends Migration
     public function up()
     {
         Schema::create('ClassHeaders', function (Blueprint $table) {
-            $table->increments('class_id');
+          $table->increments('id');
             $table->unsignedInteger('subject_id');
             $table->string('day')->nullable();
             $table->time('time')->nullable();

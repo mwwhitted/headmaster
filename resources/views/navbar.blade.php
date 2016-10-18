@@ -30,13 +30,34 @@
         <li class="active"><a href="/">Home</a></li>
         <li><a href='/teacher-selection/index'>Grade Entry</a></li>
         <li><a href='?controller=nav&action=report_cards'>Report Cards</a></li>
-
+        <!-- <li><a href='?controller=nav&action=table_maintenance'>Table Maintenance</a></li> -->
+        <li class="dropdown">
+                  <a href=href='?controller=nav&action=table_maintenance'
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false">Table Maintenance <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/people">Person</a></li>
+                    <li><a href="/teachers">Teacher</a></li>
+                    <li><a href="/students">Student</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Subject</a></li>
+                    <!-- <li><a href="/subjects">Subject</a></li> -->
+                    <li><a href="#">Class</a></li>
+                    <!-- <li><a href="/classes">Class</a></li> -->
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">School Year</a></li>
+                    <!-- <li><a href="/school_years">School Year</a></li> -->
+                  </ul>
+                </li>
         @endif
       </ul>
 
       <!-- Right Side Of Navbar -->
       <!-- <button type="submit" class="btn btn-primary "><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Back</button> -->
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right pull-right">
 
         <!-- Authentication Links -->
         @if (Auth::guest())
