@@ -12,24 +12,24 @@ class PeopleDatabaseSeeder extends Seeder
   public function run()
   {
     DB::table('people')->insert([
-      'last_name' =>'Whitted',
-      'first_name' =>'Christopher',
+      'last_name' =>'Headroom',
+      'first_name' =>'Max',
       'middle_name' =>'',
       'prefix' =>'',
       'suffix' =>'',
       'gender' =>'M',
-      'display_name' =>'Christopher Whitted',
+      'display_name' =>'Max Headroom',
       // 'created_at' =>Carbon::now(),
       // 'updated_at' =>Carbon::now(),
     ]);
     DB::table('people')->insert([
-      'last_name' =>'Xu',
-      'first_name' =>'Ke',
+      'last_name' =>'Last',
+      'first_name' =>'First',
       'middle_name' =>'',
       'prefix' =>'',
       'suffix' =>'',
-      'gender' =>'M',
-      'display_name' =>'Ke Xu'
+      'gender' =>'F',
+      'display_name' =>'First Last'
       // 'created_at' =>Carbon::now(),
       // 'updated_at' =>Carbon::now(),
     ]);
