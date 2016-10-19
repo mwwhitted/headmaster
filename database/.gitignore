@@ -1,2 +1,3 @@
 *.sqlite
 school_adminDB*.sql
+database/seeds

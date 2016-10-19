@@ -5,6 +5,6 @@
 Homestead.json
 Homestead.yaml
 .env
-headmaster/database/seeds
+database/seeds
 *.sqlite
 school_adminDB*.sql
